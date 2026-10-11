@@ -74,6 +74,8 @@ MDX components available in project files:
 - **Hostinger:** upload the contents of `out/` into `public_html`, using File Manager or FTP. URLs end in `/`, so no rewrite rules are needed. The included `.htaccess` serves the custom 404 page.
 - **Vercel:** import the repository. It detects Next.js and serves the static export as-is.
 
+A preview on a temporary domain should be built with the environment variable `SITE_PREVIEW=1`. That build tells search engines not to index it (robots.txt and a `noindex` tag on every page). The real harshunagar.com build leaves it unset.
+
 Before launch, run `npm run todos -- --strict`. It exits with an error while any placeholder is left.
 
 ## How it is built

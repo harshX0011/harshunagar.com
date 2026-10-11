@@ -24,6 +24,12 @@ export const site = {
   },
 } as const;
 
+/**
+ * Preview builds (a temporary Hostinger domain) set SITE_PREVIEW=1 at build time.
+ * They are kept out of search results; the real build at harshunagar.com is not affected.
+ */
+export const isPreview = process.env.SITE_PREVIEW === "1";
+
 export const KINDS = ["software", "websites", "brand"] as const;
 export type Kind = (typeof KINDS)[number];
 

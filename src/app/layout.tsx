@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { site } from "@/lib/site";
+import { isPreview, site } from "@/lib/site";
 import { ThemeScript } from "@/components/theme-script";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -42,6 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", images: ["/og.png"] },
   alternates: { canonical: "/" },
+  ...(isPreview ? { robots: { index: false, follow: false } } : {}),
 };
 
 export const viewport: Viewport = {

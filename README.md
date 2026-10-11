@@ -86,6 +86,7 @@ Before launch, run `npm run todos -- --strict`. It exits with an error while any
 - **Motion:** Lenis smooth scroll loads when the browser is idle. GSAP and SplitText load only on the home page, only when needed. Motion (Framer Motion) animates the Work page filter.
 - **Images:** `scripts/optimize-images.mjs` turns `content/media` into AVIF and WebP at three widths before every build. Nothing is resized at runtime.
 - **Share images:** `src/app/og.png` and `src/app/work/[slug]/og.png` render real `.png` files at build time, so they work on any static host.
+- **Builds use webpack, dev uses Turbopack:** `npm run build` runs `next build --webpack`. Hostinger's build servers do not allow Turbopack to start the helper process it needs for CSS, so production builds run their loaders in-process with webpack instead. Tailwind is a plain PostCSS plugin (`postcss.config.mjs`), so it works with both.
 - **Theme:** an inline script sets `data-theme` before paint, so there is no flash. Colour tokens live in `src/app/globals.css`.
 - **Fonts:** self-hosted, both under the SIL Open Font License (licence files sit next to the fonts).
   - Jost, a free revival of Futura, the face on the Apollo 11 plaque

@@ -1,6 +1,8 @@
 # Design directions
 
-Three distinct directions for harshunagar.com. **Nothing gets built until you pick one.**
+**Picked: A, Orrery**, kept visually separate from Dicock. The site is built on it; see README.md and PLAN.md.
+
+The three directions as proposed:
 
 You can try each direction's signature interaction on the comparison page: https://claude.ai/artifact/7MoEggZVa7akY6G11Z4c6u (private to your account).
 

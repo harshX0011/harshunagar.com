@@ -1,0 +1,470 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+  Direction A, "Orrery". Cool white and deep ink, a sun yellow for the centre,
+  cobalt for anything you can act on. Dark mode is deep navy, never pure black.
+*/
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --ink: #111522;
+  --muted: #586178;
+  --line: #a6afc0;
+  --rule: #dce1ea;
+  --sun: #f2a900;
+  --cobalt: #2b50d8;
+  --todo: #8a5f00;
+  color-scheme: light;
+}
+
+/* No-JS visitors still get dark mode from their system setting. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b0f17;
+    --surface: #111725;
+    --ink: #e6e9f0;
+    --muted: #919aaf;
+    --line: #3e475b;
+    --rule: #1e2534;
+    --sun: #f5b82e;
+    --cobalt: #8da2ff;
+    --todo: #f5b82e;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0f17;
+  --surface: #111725;
+  --ink: #e6e9f0;
+  --muted: #919aaf;
+  --line: #3e475b;
+  --rule: #1e2534;
+  --sun: #f5b82e;
+  --cobalt: #8da2ff;
+  --todo: #f5b82e;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-rule: var(--rule);
+  --color-sun: var(--sun);
+  --color-cobalt: var(--cobalt);
+
+  --font-sans: var(--font-jost), "Futura", "Century Gothic", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-martian), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --text-hero: clamp(2rem, 1.2rem + 3.4vw, 4.25rem);
+  --text-title: clamp(2.25rem, 1.5rem + 3vw, 4rem);
+  --text-lead: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
+  --text-section: clamp(1.5rem, 1.25rem + 1vw, 2.125rem);
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+/* Small mono caps, used for orbit names, dates, stack lists. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Wide, light capitals: the instrument-plate voice. Used sparingly. */
+@utility caps {
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    font-weight: 400;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--cobalt);
+    color: var(--bg);
+  }
+  :focus-visible {
+    outline: 2px solid var(--cobalt);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+}
+
+@layer components {
+  .link {
+    color: var(--cobalt);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--cobalt) 45%, transparent);
+    transition: text-decoration-color 0.2s;
+  }
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* Placeholder for content Harsh still has to write. Visible on purpose. */
+  .todo {
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    max-width: 62ch;
+  }
+  .todo-tag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--todo);
+    margin-bottom: 0.25rem;
+  }
+
+  /* Case-study body. */
+  .prose {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+  .prose > * + * {
+    margin-top: 1.1em;
+  }
+  .prose > h2 {
+    font-size: var(--text-section);
+    line-height: 1.2;
+    margin-top: 2.4em;
+    padding-top: 0.8em;
+    border-top: 1px solid var(--rule);
+  }
+  .prose > h2:first-child {
+    margin-top: 0;
+  }
+  .prose > h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: 1.8em;
+  }
+  .prose p,
+  .prose li {
+    max-width: 62ch;
+  }
+  .prose a {
+    color: var(--cobalt);
+    text-decoration: underline;
+  }
+  .prose strong {
+    font-weight: 500;
+  }
+  .prose ul {
+    display: grid;
+    gap: 0.35em;
+  }
+  .prose ul > li {
+    position: relative;
+    padding-left: 1.25em;
+  }
+  .prose ul > li::before {
+    content: "";
+    position: absolute;
+    left: 0.15em;
+    top: 0.68em;
+    width: 0.4em;
+    height: 0.4em;
+    border-radius: 50%;
+    border: 1px solid var(--muted);
+  }
+  .prose ol {
+    list-style: decimal;
+    padding-left: 1.4em;
+    display: grid;
+    gap: 0.35em;
+  }
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+  .prose blockquote {
+    border-left: 2px solid var(--sun);
+    padding-left: 1em;
+    color: var(--muted);
+  }
+}
+
+/* ---------- The orrery (home) ---------- */
+@layer components {
+  .orrery-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .orrery-hero {
+    padding-top: clamp(1.25rem, 5vh, 3.5rem);
+  }
+  .orrery-field {
+    position: relative;
+  }
+  .orrery-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1000 / 560;
+    max-height: 62vh;
+    overflow: visible;
+  }
+  .o-path {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1.25;
+  }
+  .o-sun {
+    fill: var(--sun);
+    stroke: var(--ink);
+    stroke-width: 1;
+  }
+  .o-body {
+    fill: var(--cobalt);
+    stroke: var(--bg);
+    stroke-width: 2;
+  }
+  .o-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    fill: var(--muted);
+    text-anchor: middle;
+  }
+  .orrery-index {
+    padding-block: 1.5rem 4rem;
+  }
+  .orrery-index-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+  }
+  .orrery-sun-target {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sun);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+  .orrery-cols {
+    display: grid;
+    gap: 2.25rem;
+  }
+  @media (min-width: 640px) {
+    .orrery-cols {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+  }
+  .orbit-name {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .orbit-name a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .orbit-name a:hover {
+    color: var(--ink);
+  }
+  .orbit-sentence {
+    margin-top: 0.4rem;
+    max-width: 32ch;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .orbit-list {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 1.1rem;
+    margin-left: 5px;
+    padding-block: 0.4rem;
+    border-left: 1px solid var(--line);
+  }
+  .orbit-list li {
+    position: relative;
+    padding-left: 1.15rem;
+    line-height: 1.3;
+  }
+  .orbit-dot {
+    position: absolute;
+    left: -6px;
+    top: 0.32em;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--cobalt);
+    box-shadow: 0 0 0 2px var(--bg);
+  }
+  .orbit-list a {
+    font-size: 1.0625rem;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .orbit-list a:hover {
+    color: var(--cobalt);
+    text-decoration: underline;
+  }
+  .orrery-hint {
+    display: none;
+  }
+}
+
+/* Scroll mode: the stage sticks, the orrery uncoils into the index. Decided in CSS so the
+   layout is right from the first paint; JS only draws. */
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+  html.js .orrery {
+    height: 300vh;
+    height: 300svh;
+  }
+  html.js .orrery-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+  }
+  html.js .orrery-field {
+    flex: 1;
+    min-height: 0;
+  }
+  html.js .orrery-svg {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+  html.js .orrery-index {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 0.5rem 2.5rem;
+    opacity: var(--reveal, 0);
+    pointer-events: none;
+  }
+  html.js .orrery[data-revealed] .orrery-index,
+  html.js .orrery-index:focus-within {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  html.js .orrery-index-title {
+    margin-bottom: 1.25rem;
+  }
+  html.js .orrery-cols {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+  html.js .orbit-list {
+    border-left-color: transparent;
+  }
+  html.js .orbit-dot,
+  html.js .orrery-sun-target {
+    visibility: hidden;
+  }
+  html.js .orrery-hint {
+    display: block;
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    translate: -50% 0;
+  }
+  @media (min-width: 1024px) {
+    html.js .orbit-list {
+      gap: 0.85rem;
+    }
+    html.js .orbit-list a {
+      font-size: 1.25rem;
+    }
+    html.js .orbit-sentence {
+      font-size: 1rem;
+    }
+  }
+  @media (max-width: 767px) {
+    html.js .orbit-sentence {
+      display: none;
+    }
+    html.js .orbit-list {
+      gap: 0.55rem;
+    }
+    html.js .orbit-list a {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* Lenis smooth scroll (copied from lenis/dist/lenis.css). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

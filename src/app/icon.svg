@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .o { fill: none; stroke: #111522; stroke-width: 3; }
+    .b { fill: #2b50d8; }
+    @media (prefers-color-scheme: dark) { .o { stroke: #e6e9f0; } .b { fill: #8da2ff; } }
+  </style>
+  <ellipse class="o" cx="32" cy="32" rx="28" ry="14" />
+  <circle cx="32" cy="32" r="8" fill="#f2a900" />
+  <circle class="b" cx="52" cy="22" r="5" />
+</svg>
